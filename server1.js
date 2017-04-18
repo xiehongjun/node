@@ -32,7 +32,6 @@ let server = http.createServer(function (request,response) {
     //1. 7:00-8:30
     // 实现多个文件 可以同时返回，不需要判断各种各样的文件
 });
-
 server.listen(80,function () {
     console.log('成功');
 });
