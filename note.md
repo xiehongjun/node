@@ -45,4 +45,18 @@ http://idea.lanyus.com/
 - 导出一个模块 module.exports  exports
 - 使用一个模块 require
 
+## 模块的分类
+- 文件模块
+- 核心模块，内置模块 http fs url...
+- 第三方模块 别人写的 需要下载
 
+## 第三方模块 （全局，本地的）
+- 全局 只在命令行下使用(任何路径都可以)
+```
+npm install nodeppt -g
+```
+
+> nodeppt start 在当前目录下，启动ppt
+
+## 断掉启动的服务
+两次ctrl+c 停掉此服务
