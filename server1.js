@@ -14,10 +14,25 @@ let server = http.createServer(function (request,response) {
         response.end(result);
     }
     if(url == '/index.css'){
-
+        response.setHeader('Content-Type','text/css;charset=utf-8');
+        var result = fs.readFileSync('./index.css');
+        response.end(result);
     }
-
+    if(url == '/2.html'){
+        response.setHeader('Content-Type','text/html;charset=utf-8');
+        var result = fs.readFileSync('./2.html');
+        response.end(result);
+    }
+    if(url == '/index.js'){
+        response.setHeader('Content-Type','application/javascript;charset=utf-8');
+        var result = fs.readFileSync('./index.js');
+        response.end(result);
+    }
+    response.end();
+    //1. 7:00-8:30
+    // 实现多个文件 可以同时返回，不需要判断各种各样的文件
 });
+
 server.listen(80,function () {
     console.log('成功');
 });
