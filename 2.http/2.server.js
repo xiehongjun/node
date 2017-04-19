@@ -19,7 +19,7 @@ http.createServer(function (req,res) {
     let attr = pathname.substr(index);*/
     let attr =/(\.[a-zA-Z]+)$/.exec(pathname)[1];
     res.setHeader('Content-Type',''+MIME[attr]+';charset=utf-8');
-    var result = fs.readFileSync('.'+pathname);
+    var result = fs.readFileSync('.'+pathname); //如果文件不存在，读取会报错， 可以返回一个NOT FOUND
     res.end(result);
 }).listen(8080,function () {
     console.log('start 8080');
