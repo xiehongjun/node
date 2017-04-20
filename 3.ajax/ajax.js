@@ -60,7 +60,7 @@
             if(this.readyState==4&&/^2\d{2}$/.test(this.status)){
                 // 默认我们会传递一个success函数，调用函数将最后的结果传递到success函数中
                 if(typeof _defaultOptions.success == 'function')
-                    //this.response就是服务端最后返回的结果
+                    //this.response就是服务端最后返回的结果,解决异步的问题，通过回调函数
                     _defaultOptions.success.call(this,this.response);//让success函数中的this变成xhr对象
             }
         };
@@ -68,6 +68,7 @@
     }
     window.ajax = ajax;
 }();
+
 /*getXhr();7
 getXhr(); *///当一个函数执行完后 下次 在重新执行会导致重新判断，解决方式：函数的覆盖
 //每次调用ajax 都要重新创建一个xhr对象

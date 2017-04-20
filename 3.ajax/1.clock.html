@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训http://www.zhufengpeixun.cn</title>
+</head>
+<body>
+<div id="clock"></div>
+<script src="ajax.js"></script>
+<script>
+    // http://localhost/
+    setInterval(function () {
+        ajax({
+            url:'http://localhost:3001/getclock', //这个接口名字是你自己定义
+            type:'get',
+            dataType:'json', //后台必须返回一个json类型
+            success:function (data) {
+                clock.innerHTML = data["时间"]
+            }
+        });
+    },1000);
+
+</script>
+</body>
+</html>

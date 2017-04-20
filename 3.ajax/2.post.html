@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训http://www.zhufengpeixun.cn</title>
+</head>
+<body>
+<div id="clock"></div>
+<!--action 表示提交的地点-->
+<!--method 表示发数据的方式 post 放到请求体中  get 在url上?username=123&password=312-->
+<!--每个表单上要有一个 name属性 *** 必须要有 否则不会提交上去-->
+<!--button 默认不写就是提交-->
+<form action="/post" method="get">
+    用户名:<input type="text"> <br>
+    密码:<input type="text" name="password"> <br>
+    <button type="submit">提交</button>
+</form>
+<script src="ajax.js"></script>
+<script>
+    //1.ajax可以发送或者获取数据
+    //2.form表单可以发送数据 get /post
+        /*ajax({
+            url:'/post',
+            type:'post',
+            data:JSON.stringify({name:1}),
+            dataType:'json',
+            success:function (data) {
+                clock.innerHTML = data["时间"]
+            }
+        });*/
+</script>
+</body>
+</html>
