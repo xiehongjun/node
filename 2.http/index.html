@@ -21,6 +21,7 @@
         //指定服务端响应回的内容类型
         xhr.responseType = 'json'; //返回的内容 会自动转换成对象
         xhr.onreadystatechange = function () {
+            //{timer} = xhr.response
             if(this.readyState == 4 && /^2\d{2}$/.test(this.status)){
                 clock.innerHTML = xhr.response.timer;
                 //xhr.response 返回对象 xhr.responseText 返回文本
