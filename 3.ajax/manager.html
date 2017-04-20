@@ -23,7 +23,7 @@
             type:'post',//发送的是post请求
             dataType:'json', //后台返回必须是json格式 JSON.stringify包住的结果
             data: JSON.stringify({
-                    username:username.value,
+                    username:username.value, //value是输入框的属性
                     password:password.value
             }),//这个就是xhr.send的内容
             success:function (data) {
@@ -48,3 +48,5 @@
 </script>
 </body>
 </html>
+
+
