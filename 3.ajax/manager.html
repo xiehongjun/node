@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训http://www.zhufengpeixun.cn</title>
+</head>
+<body>
+<label for="username">用户名</label>
+<input type="text" id="username">
+<label for="password">密码</label>
+<input type="text" id="password">
+<button id="btn">添加用户</button>
+<!--添加完成后返回最新的用户列表,数组-->
+<div id="container"></div>
+<script src="ajax.js"></script>
+<script>
+    var oBtn = document.getElementById('btn');
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+    oBtn.onclick = function () {
+        ajax({
+            url:'/adduser', //请求后台的路径
+            type:'post',//发送的是post请求
+            dataType:'json', //后台返回必须是json格式 JSON.stringify包住的结果
+            data: JSON.stringify({
+                    username:username.value,
+                    password:password.value
+            }),//这个就是xhr.send的内容
+            success:function (data) {
+                console.log(data);
+                //因为指定了data是json，所有默认data就是数组
+                var str = '<ul>';
+                    for(var i = 0; i<data.length;i++){
+                        var current = data[i];
+                        str+='<li>'+current.username+':'+current.password+'</li>'
+                    }
+                str+='</ul>';
+                container.innerHTML = str;
+            }
+        });
+
+       /* var xhr = new XMLHttpRequest();
+        xhr.open('post','/adduser',true);
+        xhr.responseType = 'json';
+        //传递的格式可以是  a=1&b=2  {a:1,b:2}
+        xhr.send(JSON.stringify({username:username.value,password:password.value}));*/
+    }
+</script>
+</body>
+</html>

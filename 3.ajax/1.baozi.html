@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训http://www.zhufengpeixun.cn</title>
+    <button>获取包子</button>
+</head>
+<body>
+<script>
+    var xhr = new XMLHttpRequest();
+    var result = '';
+    //1.现在写的get post 只求心理安慰
+    xhr.open('get','/baozi?bb=500&cc=100'); //通过路径传递数据 num=1
+    xhr.responseType = 'json';//json必须小写
+    xhr.onreadystatechange = function () {
+        //服务端完成 200  xhr.status DONE 表示接收完成
+        if(xhr.readyState == 4 && xhr.status == 200){
+            //默认拿到的就是text类型
+            //如果你设置了类型为json  服务端仍然可以给你字符串，如果服务端返回的是JSON字符串,会自动转换成json
+            //result = xhr.response; //如果是异步 必须在回调函数中处理
+            document.write(xhr.response.food);
+        }
+    };
+    xhr.send();
+
+</script>
+</body>
+</html>

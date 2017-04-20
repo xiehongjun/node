@@ -91,3 +91,19 @@ ajax({
         console.log(this)
     }
 });*/
+
+/*
+//服务端返回html后，浏览器解析html发现有ajax请求，会在向服务端发送请求
+//1.传递参数通过url传递 问号后面的 我们称他为“查询字符串”
+//2.通过send中传递数据，也就是放在请求体中 一般发送“json字符串”
+//如果是表单 1)通过submit提交数据 有两种方式get和post，get请求依旧默认拼接到url上，post请求放到请求体中
+var xhr = new XMLHttpRequest();
+xhr.open('GET','/user?id=1&b=2&c=3',true);//通过路径递参数
+xhr.onreadystatechange = function () {
+    //等待数据完成后并且 服务端返回200 即可拿到数据
+    if(xhr.readyState == 4 && xhr.status == 200){
+        xhr.response //默认类型都是字符串，即是服务端response.end中的结果，如果设置responseType="json" 那么强制需要服务端返回的是对象类型，ajax是异步操作,必须放在onreadystatechange中
+    }
+};
+xhr.send();//请求体的数据在这里传递
+*/
