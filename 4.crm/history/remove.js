@@ -20,14 +20,16 @@ let listener = function (req,res) {
         res.end(JSON.stringify(final));
         return;
     }
+    //做删除用户
     if(pathname == '/removeInfo'){
+        //1.获取要删除的id
         let id = query.id;
         final.msg = '删除失败';
         final.code = 1;
         for(let i = 0; i<result.length;i++){
             let data = result[i];
             if(data.id == id){
-                result.splice(i,1);
+                result.splice(i,1); //将result写入到json中
                 fs.writeFileSync(FILE_NAME,JSON.stringify(result));
                 final.msg = '删除成功';
                 final.code = 0;
@@ -38,7 +40,6 @@ let listener = function (req,res) {
         res.end(JSON.stringify(final));
         return;
     }
-
     try {
         res.setHeader('Content-Type',mime.lookup(pathname)+';charset=utf-8');
         let result = fs.readFileSync('.'+pathname);
