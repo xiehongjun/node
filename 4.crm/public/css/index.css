@@ -4,4 +4,4 @@
 .container .table th{background: greenyellow; padding: 10px}
 .table-bordered { border: 3px solid greenyellow}
 .container .table td{padding: 6px;}
-a{text-decoration: underline; color: blue}
+a{text-decoration: underline; color: blue; cursor: pointer}

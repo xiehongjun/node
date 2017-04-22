@@ -10,35 +10,19 @@ let listener = function (req,res) {
         res.setHeader('Content-Type','text/html;charset=utf-8');
         return res.end(result);
     }
-    let result = fs.readFileSync(FILE_NAME,'utf8');
+    //先把所有用户都读出来
+    //读文件，如果设置了utf8 读出来的都是字符串，需要手动转成对象
+    let result = fs.readFileSync(FILE_NAME,'utf8');//最后我们要操作读出来的数据，所以必须要让读出的内容转换成字符串类型
+    //如果没有用户读取到的是空字符串。如果没有 返回空数组;
     result = result.length == 0?[]:JSON.parse(result);
-    let final = {code:0,msg:'成功',data:''};
+    let final = {code:0,msg:'成功',data:''}; //返回的结果
+    //获取所有用户，
     if(pathname == '/getList'){
         final.data = result;
         final.msg = '亲，查询成功了';
         res.setHeader('Content-Type','text/json;charset=utf-8');
         res.end(JSON.stringify(final));
-        return;
-    }
-    //做删除用户
-    if(pathname == '/removeInfo'){
-        //1.获取要删除的id
-        let id = query.id;
-        final.msg = '删除失败';
-        final.code = 1;
-        for(let i = 0; i<result.length;i++){
-            let data = result[i];
-            if(data.id == id){
-                result.splice(i,1); //将result写入到json中
-                fs.writeFileSync(FILE_NAME,JSON.stringify(result));
-                final.msg = '删除成功';
-                final.code = 0;
-                break;
-            }
-        }
-        res.setHeader('Content-Type','text/json;charset=utf-8');
-        res.end(JSON.stringify(final));
-        return;
+        return; //防止代码继续向下执行
     }
     try {
         res.setHeader('Content-Type',mime.lookup(pathname)+';charset=utf-8');
