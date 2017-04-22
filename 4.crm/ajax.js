@@ -72,6 +72,7 @@
 * }
 * xhr.send(data);send方法中传递的如果是对象 会自动的toString();
 * */
+/*
 ajax({
     type:'get', //GET PUT DELETE POST http的四个动词， （RESTFul风格）
     url:'/user', //路径
@@ -83,3 +84,4 @@ ajax({
         // data 代表的就是xhr.response这个对象
     }// 成功后的回调
 });
+*/
