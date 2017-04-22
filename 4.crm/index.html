@@ -3,14 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>珠峰培训http://www.zhufengpeixun.cn</title>
+    <link rel="stylesheet" href="public/css/index.css">
 </head>
 <body>
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>电话</th>
+            <th>地址</th>
+            <th colspan="2">操作</th>
+        </tr>
+        <tbody id="tBody">
+            <tr>
+                <td>1</td>
+                <td>帅哥</td>
+                <td>22</td>
+                <td>182212312231</td>
+                <td>天安门</td>
+                <!--colspan合并2列-->
+                <td><a>删除</a></td>
+                <td><a href="/detail.html">修改</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <!--引用路径不能出现../  也不能出现中文-->
 <!--ajax 必须存在的是服务端环境 ，不能出现本地地址-->
-<script src="ajax.js"></script>
+<script src="public/js/ajax.js"></script>
+<script src="public/js/index.js"></script>
 <script>
     //默认 不写/ 表示是相对当前文件的地址 /表示根路径
-    ajax({url:'/xxx'});
     //webstorm 不支持动态数据，我们自己来写服务端，
     //1，先支持和webstorm的功能一样
 </script>
