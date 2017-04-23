@@ -99,7 +99,8 @@
             return;//上下键不请求ajax
         }
         if (keyCode == 13) {
-            return window.open('https://www.baidu.com/s?wd=' + datas[index]);
+            var str = datas[index] || defaultValue;
+            return window.open('https://www.baidu.com/s?wd=' +str);
         }
         var val = $(this).val();//获取输入框的内容 进行ajax请求
         $.ajax({
