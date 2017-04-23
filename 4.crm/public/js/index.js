@@ -13,7 +13,7 @@ var module = (function () {//私有化
             str+='<td>'+current.address+'</td>';
             //自定义属性，给每个删除按钮添加一个id 。用于点击时,能获取对应数据的id
             str+='<td><a data-id="'+current.id+'">删除</a></td>';
-            str+='<td><a>修改</a></td>';
+            str+='<td><a href="/detail.html?id='+current.id+'">修改</a></td>';
             str+='</tr>';
         }
         tBody.innerHTML = str;

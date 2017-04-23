@@ -6,3 +6,10 @@
 .container .table td{padding: 6px;}
 a{text-decoration: underline; color: blue; cursor: pointer}
 .btn{font-size: 30px;}
+
+
+/*detail style css*/
+#group{border: 3px yellowgreen solid; padding: 10px}
+.list-group{border-bottom: 1px dashed yellowgreen;padding-bottom: 5px;}
+.list-group label{display: inline-block; width: 150px; font-size: 25px; vertical-align: middle}
+.list-group input{vertical-align: middle}

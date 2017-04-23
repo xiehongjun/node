@@ -4,4 +4,14 @@ let result = fs.readFileSync('./data.json','utf8');//最后我们要操作读出
  result = result.length == 0?[]:JSON.parse(result);
 console.log(result);
 
-
+listener();
+function listener() {
+  if(false){
+   console.log(100);
+   return;
+  }
+ if(true){
+  console.log(200);
+  return;
+ }
+}
