@@ -15,6 +15,21 @@ oBtn.style.cssText="font-size:20px;color:blue;width:60px;";
 var id = query.id;
 if(id){ //修改
     oBtn.innerHTML = '修改';
+    ajax({
+        url:'/getInfo?id='+id,
+        dataType:'json',
+        success:function (res) { // {code:0,msg:0,data:{}}
+            if(res&&res.code == 0){
+                var u = res.data;
+                username.value = u.name;
+                age.value = u.age;
+                phone.value = u.phone;
+                address.value = u.address;
+            }else{ //传递的id根本存在，没法修改
+                window.location.href = '/';
+            }
+        }
+    }); //如果是修改默认请求当前用户信息
 }else{ //增加
     oBtn.innerHTML = '增加';
 }
@@ -26,6 +41,7 @@ var phone = document.getElementById('phone');
 var address = document.getElementById('address');
 oBtn.onclick = function () {
     if(id){ //修改
+        //先通过id获取 当前id的数据
 
     }else{ //增加
         ajax({
@@ -39,8 +55,8 @@ oBtn.onclick = function () {
                address:address.value
            }),
            success:function (res) {  // {msg:'',code:'',data}
-               if(res&&res.code == 0)
-                    window.location.href = '/';
+               if(res&&res.code == 0){}
+                    //window.location.href = '/';
            }
         });
     }
