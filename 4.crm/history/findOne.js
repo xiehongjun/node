@@ -55,6 +55,7 @@ let listener = function (req,res) {
         return;
     }
     if(pathname == '/getInfo'){
+        //获取传递过来的id
         let id = query.id;
         final.code = 1;
         final.msg = '用户不存在';
@@ -63,7 +64,7 @@ let listener = function (req,res) {
             if(current.id == id){
                 final.code = 0;
                 final.msg = '亲 你的用户找到了';
-                final.data = current;
+                final.data = current;//找到的用户
                 break;
             }
         }
@@ -71,34 +72,6 @@ let listener = function (req,res) {
         res.end(JSON.stringify(final));
         return;
     }
-    //修改逻辑
-    if(pathname == '/updateInfo'){
-        //获取id ，和请求体中的数据
-        let id = query.id;
-        let str = '';
-        req.on('data',function (data) {
-            str+=data;
-        });
-        req.on('end',function () {
-            let u = JSON.parse(str);
-            final.code = 1;
-            final.msg = '没有找到修改的用户';
-            for(let i = 0; i<result.length;i++){
-                let cur = result[i];
-                if(cur.id == id){ //当前的id找到了
-                    result[i] = u; // 不能写cur = u;要改的是result
-                    final.code = 0;
-                    final.msg = '修改成功';
-                    fs.writeFileSync(FILE_NAME,JSON.stringify(result));
-                    break;
-                }
-            }
-            res.setHeader('Content-Type','text/json;charset=utf-8');
-            res.end(JSON.stringify(final));
-        });
-        return;
-    }
-
     try {
         res.setHeader('Content-Type',mime.lookup(pathname)+';charset=utf-8');
         let result = fs.readFileSync('.'+pathname);

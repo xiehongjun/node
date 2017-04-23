@@ -4,14 +4,13 @@ let result = fs.readFileSync('./data.json','utf8');//最后我们要操作读出
  result = result.length == 0?[]:JSON.parse(result);
 console.log(result);
 
-listener();
-function listener() {
-  if(false){
-   console.log(100);
-   return;
-  }
- if(true){
-  console.log(200);
-  return;
- }
-}
+/*
+var ary = [{name:1},{name:2}];
+var obj = ary[0];
+obj = {name:3};
+console.log(ary);*/
+
+/*
+var ary = [{name:1},{name:2}];
+ary[0] = {name:3}
+console.log(ary);*/

@@ -41,8 +41,25 @@ var phone = document.getElementById('phone');
 var address = document.getElementById('address');
 oBtn.onclick = function () {
     if(id){ //修改
-        //先通过id获取 当前id的数据
-
+        //要将id传入过去，传入最新的数据
+        //修改 =  查询+增加
+        ajax({
+            type:'put', //put修改
+            dataType:'json',
+            url:'/updateInfo?id='+id,
+            data:JSON.stringify({ //要修改成什么样子
+                id:id, //传给后台 后台不需要再增加id了
+                name:username.value,
+                age:age.value,
+                phone:phone.value,
+                address:address.value
+            }),
+            success:function (res) {
+                if(res&& res.code==0){
+                    window.location.href = '/';
+                }
+            }
+        });
     }else{ //增加
         ajax({
            url:'/addInfo',
