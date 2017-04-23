@@ -5,11 +5,18 @@
     <title>珠峰培训http://www.zhufengpeixun.cn</title>
 </head>
 <body>
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script>
-   var xhr = new XMLHttpRequest();
-    xhr.open('get','http://localhost:3000/user',true);
-    xhr.send();
+//1.声明全局函数
+function bb(data) { //声明一个全局函数
+    document.body.innerHTML = data;
+}
+//jsonp 和ajax无关，jsonp只是跨域的一种手段
+//2.创建script标签访问其他服务器，并且告诉服务器当前函数叫什么名字
+var oScript = document.createElement('script');
+// 63342-> 8080 跨域  /getDate
+oScript.src = 'http://localhost:8080/getTime?cb=bb';//将全局函数的名字
+// 传递给服务器
+document.body.appendChild(oScript); //将script标签插入到页面中
 </script>
 </body>
 

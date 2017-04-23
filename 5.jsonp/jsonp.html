@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训http://www.zhufengpeixun.cn</title>
+</head>
+<body>
+<script>
+    //1.前端定义的
+    function b (data) {
+        document.body.innerHTML = data;
+    }
+    //2.创建标签请求服务端 script的src可以跨域
+    var oScript = document.createElement('script');
+    oScript.src = 'http://localhost:8080/getDate?cb=b';
+    document.body.appendChild(oScript);
+    //2.服务端返回的
+    //b({name:'帅哥',age:'8'})
+</script>
+</body>
+</html>
