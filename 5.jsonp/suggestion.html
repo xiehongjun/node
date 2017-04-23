@@ -4,27 +4,123 @@
     <meta charset="UTF-8">
     <title>珠峰培训http://www.zhufengpeixun.cn</title>
     <style>
-        *{margin: 0;padding: 0}
-        body{margin: 30px;}
-        .container{width: 800px;margin: 0 auto}
-        input{width: 98%;height: 30px;line-height: 30px;padding-left: 2%; border-radius: 5px; outline: none;border: 1px solid #3E3E3E}
-        ul{list-style: none}
-        li{height: 30px; width: 98%;border: 1px solid #3E3E3E; border-bottom: 0; line-height: 30px;padding-left: 2%}
-        ul :last-child {border-bottom: 1px solid #3E3E3E;}
-        .active{background: #00c6ff}
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            margin: 30px;
+        }
+
+        .container {
+            width: 800px;
+            margin: 0 auto
+        }
+
+        input {
+            width: 98%;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 2%;
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid #3E3E3E
+        }
+
+        ul {
+            list-style: none
+        }
+
+        li {
+            height: 30px;
+            width: 98%;
+            border: 1px solid #3E3E3E;
+            border-bottom: 0;
+            line-height: 30px;
+            padding-left: 2%
+        }
+
+        ul :last-child {
+            border-bottom: 1px solid #3E3E3E;
+        }
+
+        .active {
+            background: #00c6ff
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <!--关闭掉默认的提示层-->
     <input type="text" autocomplete="off">
-    <ul>
-        <li class="active">你哈皮</li>
-        <li>你哈皮</li>
-        <li>你哈皮</li>
-        <li>你哈皮</li>
-    </ul>
+    <ul></ul>
 </div>
 <script src="node_modules/jquery/dist/jquery.js"></script>
+<!--https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a  百度jsonp接口-->
+<!--jquery中的ajax  也封装了jsonp-->
+<script>
+    //1.在keyup中 请求ajax
+    var $ul = $('ul');
+    var index = -1; // 默认哪个列表都没有选中状态
+    var datas = [];//数据的总长度
+    var defaultValue = '';//输入框中默认值
+    var $input = $('input');
+    $input.on('keydown', function (e) {
+        if (e.keyCode == 38) {
+            e.preventDefault();
+        }
+    });
+    $input.on('keyup', function (e) {
+        var keyCode = e.keyCode;
+        if (keyCode == 38 || keyCode == 40) {
+            if (keyCode == 38) {
+                //如果index--越界后 回到最后一个
+                index--;
+                if (index == -2) {
+                    index = datas.length - 1;
+                }
+            }
+            if (keyCode == 40) {
+                //到最后回到第一个
+                index++;
+                if (index == datas.length) {
+                    index = -1;
+                }
+            }
+            if (index == -1) { //如果= -1 默认清空所有样式
+                //将原来输入的默认值 保存下来
+                $('ul li').removeClass('active');
+                $(this).val(defaultValue); //越界后将默认值 放到输入框内部
+            } else { //让当前的选中
+                $(this).val(datas[index]); //当给li变色时将当前的值赋予给输入框
+                $('ul li').removeClass('active').eq(index).addClass('active');
+            }
+            return;//上下键不请求ajax
+        }
+        if (keyCode == 13) {
+            return window.open('https://www.baidu.com/s?wd=' + datas[index]);
+        }
+        var val = $(this).val();//获取输入框的内容 进行ajax请求
+        $.ajax({
+            type: 'get',
+            dataType: 'jsonp', //类型标注成jsonp
+            url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=' + val,
+            jsonp: 'cb', // 百度服务端规定 函数名必须叫cb
+            context: $('input'), //更改success的this指向
+            success: function (res) {
+                defaultValue = $(this).val(); //输入框默认搜索的值
+                $ul.empty(); //清空 原有的列表
+                datas = res.s; //获取的所有数据
+                var str = ``;
+                $.each(datas, function (index, item) {
+                    str += `<li>${item}</li>`;
+                });
+                $ul.append(str);
+            }
+        })
+    });
+
+</script>
 </body>
 </html>
