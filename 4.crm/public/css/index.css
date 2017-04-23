@@ -6,7 +6,3 @@
 .container .table td{padding: 6px;}
 a{text-decoration: underline; color: blue; cursor: pointer}
 .btn{font-size: 30px;}
-.form{ border: 3px solid yellowgreen;padding: 10px}
-.form-group{margin-bottom: 10px;}
-.form-group label{width: 60px; display: inline-block;font-size: 20px;line-height: 30px}
-.form-group input{width: 200px;line-height: 30px;height: 30px}
