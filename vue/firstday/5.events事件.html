@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <!--v-for="(value,key) of fruits"-->
+    <!--v-on代表的是指令可以用来绑定事件 绑定事件执行括号，不需要传递参数则不加-->
+    <!--v-on过长可以简写成@符-->
+    <input type="text" v-model="add" @keyup="addFruit">
+    <ul>
+        <li v-for="fruit in fruits">{{fruit}}</li>
+    </ul>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    //根组件，在vue中操作的都是数据 不是dom元素
+    var vm = new Vue({  //可以通过模板指定内容
+        el:'#app',
+        methods:{ //methods中放置所有的方法
+            addFruit(e) { //如果对象中是函数 可以省略function关键字
+                //在vue中methods中的方法里的this指向的都是vm
+                if(e.keyCode == 13){
+                    this.fruits.push(this.add);
+                    this.add = '';
+                }
+            }
+        },
+        data:{
+            add:'',
+            fruits:['苹果','芒果','榴莲']
+        }
+    });
+</script>
+</body>
+</html>

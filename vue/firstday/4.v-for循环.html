@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <!--循环数组,要循环谁 就在谁的身上写v-for 可以使用in或者of-->
+    <!--<ul>
+        <li v-for="(value,index) in phones">{{value}} {{index}}</li>
+    </ul>-->
+    <!--1.变量用{{}}输出 普通html不用包在{{}}中-->
+    <!--<ul>
+        <li v-for="(val,parentIndex) in phones">{{parentIndex+1}}.{{val.name}}
+            <ul>
+                &lt;!&ndash;val.type&ndash;&gt;
+                <li v-for="(t,index) in val.type">
+                    {{parentIndex+1}}.{{index+1}} {{t}}
+                </li>
+            </ul>
+        </li>
+    </ul>-->
+    <!--2.可以遍历字符串-->
+    <!--<ul>
+        <li v-for="a in message">{{a}}</li>
+    </ul>-->
+    <!--3.对象 对象没有索引 取出来的后面是key-->
+    <ul>
+        <li v-for="(j,key) of json"> {{key}}:{{j}}</li>
+    </ul>
+    <!--v-for可以遍历对象，数组，字符串-->
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    //声明式渲染
+    var vm = new Vue({
+        el: '#app',
+        //data是数据 可以是任意类型(函数不在这里声明)
+        data: {
+            message: 'hello',
+            boolean: true,
+            json:{name:'珠峰',age:8,address:'回龙观'},
+            phones: [
+                {name: 'iphone', type: ['4s', '5s', '6s']},
+                {name: '三星', type: ['s5', 's4']},
+                {name: 'xiaomi', type: ['红米']},
+            ]
+        }
+    });
+   
+
+</script>
+
+</body>
+</html>
