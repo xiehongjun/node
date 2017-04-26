@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body >
+<div id="app">
+    <!--小胡子语法-->
+    {{message}}
+    {{hello}}
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<!--只需一片json + 一段html 就可以实现基础功能-->
+<script>
+    //会在全局下多一个Vue的构造函数
+    var vm = new Vue({
+        el:'#app',//可以指定vue的应用范围,不能给body和html
+        data:{message:'',hello:0}
+    }); //viewModel,数据要挂在vm上才可以实现MVVM
+    //vm会代理data中的所有数据 vm.message  Object.defineProperty
+</script>
+</body>
+</html>

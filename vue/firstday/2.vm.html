@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body >
+<div id="app">
+    {{message.name}} {{message.age}}
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    //初始化的数据必须要定义后才能修改使用
+   //var obj = {name:1,age:1};
+    var obj = {message:{name:1}};
+   var vm = new Vue({
+       el:'#app',
+       data:obj
+   });
+   obj.message.age = 2; //对象的属性上不能存在的数据不会报错,不能增加以前没有的属性
+
+</script>
+</body>
+</html>

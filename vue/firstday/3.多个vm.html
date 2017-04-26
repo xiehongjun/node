@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body >
+<div id="app">
+    <!--插值表达式 表达式中不能写js语法，可以赋值 运算 三元，展示返回的结果-->
+    <!--{{ message=='zfpx'?'hello':'world'  }}-->
+    <!--在大括号中默认放的都是变量-->
+    <!--Vue的指令-->
+    <!--1.双向绑定 v-model 可以将数据绑定到视图上，当视图改变时，可以数据更改 -->
+    <!--2.只有表单元素可以更改视图input radio checkbox textarea select 只有以上五个可以增加v-model指令，其他均不行  只能放置表达式-->
+    <input type="text" v-model="message">
+    <!--{{message}}-->
+    <!--v-html 指令 将字符串展示成html-->
+    <!--<div v-html="html"></div>-->
+    <!--v-once 只让数据绑定一次，在数据更新不在刷新视图-->
+    <!--<div v-once>{{message}}</div>-->
+    <!--v-text 用法和{{}}一样，不会闪烁-->
+    <div v-text="message"></div>
+    <!--默认属性是不会展示在页面上的,当vue数据渲染完成后会替换掉div中的内容-->
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    //实例可以创建多个（一般只有一个）
+   var vm = new Vue({
+       el:'#app',
+       data:{message:'zfpx',html:'<h1>hello world</h1>'}
+   });
+   /*var vm1 = new Vue({
+       el:'#app1',
+       data:{message:'jw'}
+   });*/
+
+</script>
+</body>
+</html>
