@@ -14,20 +14,41 @@
     <div class="row">
         <div class="col-md-12">
             <table class="table table-bordered table-hover">
-                <catption class="h3 text-warning">
+                <caption class="h3 text-warning">
                     商品列表
-                </catption>
+                </caption>
                 <tr>
                     <th class="text-center">商品名称</th>
                     <th class="text-center">商品价格</th>
+                    <th class="text-center">商品数量</th>
                     <th class="text-center">操作</th>
                 </tr>
-                <tr class="text-center">
-                    <td>iphone</td>
-                    <td>100</td>
-                    <td><button class="btn btn-danger btn-sm">删除</button></td>
+                <tr class="text-center" v-for="phone in phones">
+                    <td>{{phone.name}}</td>
+                    <td>{{phone.price}}</td>
+                    <td><input type="text" v-model="phone.count"></td>
+                    <td><button class="btn btn-danger btn-sm" @click="remove(phone)">删除</button></td>
+                </tr>
+                <tr>
+                   <td colspan="4">
+                       <!--会实时监控total返回值-->
+                       总价:  {{total()}}
+                   </td>
                 </tr>
             </table>
+            <form role="form">
+                <div class="form-group">
+                    <label for="username" class="control-label">商品名称</label>
+                    <input type="text" class="form-control" id="username" placeholder="请输入商品名称" v-model="product.name">
+                </div>
+                <div class="form-group">
+                    <label for="price" class="control-label">商品价格</label>
+                    <input type="text" class="form-control" id="price" placeholder="请输入商品价格" v-model="product.price" >
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" @click="add">添加</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -36,7 +57,28 @@
     var vm = new Vue({
         el:'#app',
         data:{
-            phones:[{name:'三星',price:30},{name:'华为',price:40},{name:'苹果',price:100}]
+            product:{price:'',name:''},
+            phones:[{name:'三星',price:30,count:1},{name:'三星',price:30,count:1},{name:'华为',price:40,count:2},{name:'苹果',price:100,count:3}]
+        },
+        methods:{
+            add(){
+                var obj = this.product; //获取到输入框中的内容
+                obj.count = 1; //增加数量
+                this.product = {}; //输入后清空输入框
+                this.phones.push(obj); //将对象插入到数组中
+            },
+            total(){ //如果在页面上是通过{{total()}} 页面任何一个数据变化都会重新total
+                var n = this.phones.reduce(function (prev,next) {
+                    return prev+next.price*next.count;
+                },0); //不要取prev的值 让prev一直是个数字
+                return n;
+            },
+            remove(phone){
+                //在phones数据中移除掉 phone ,filter
+                this.phones = this.phones.filter((item)=>{
+                    return item!=phone; //返回false 则删除 （删除!=）;
+                });
+            }
         }
     })
 </script>
