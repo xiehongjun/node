@@ -7,12 +7,25 @@
 <body>
 <div id="app">
     <!--v-for="(value,key) of fruits"-->
-    <!--v-on代表的是指令可以用来绑定事件 绑定事件执行括号，不需要传递参数则不加-->
+    <!--v-on代表的是指令可以用来绑定事件 绑定事件执行括号，不需要传递参数则不加,如果写()需要手动传入事件源$event-->
     <!--v-on过长可以简写成@符-->
-    <input type="text" v-model="add" @keyup="addFruit">
+    <input type="text" v-model="add" @keyup="addFruit($event)">
     <ul>
         <li v-for="fruit in fruits">{{fruit}}</li>
     </ul>
+    <!--v-show 操作的是css样式,如果不满足条件则display:none-->
+    <!--v-if操作的dom元素,默认不满足条件时 dom不存在，满足后则增加dom元素-->
+    <!--频繁操作显示和隐藏,使用v-show-->
+    <div v-if="fruits.length>=8">
+        你的水果已经超过8种了
+    </div>
+    <div v-else-if="fruits.length>=5">
+        你的水果大于5种
+    </div>
+    <div v-else>
+        你的水果大于等于3
+    </div>
+    <!--操作元素的显示和隐藏 首选 if/show-->
 </div>
 <script src="node_modules/vue/dist/vue.js"></script>
 <script>

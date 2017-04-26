@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<!--bootstrap 有几个样式 成功:success(绿色) 危险:danger(红色) 警告:warning(黄色)
+    首选(primary) 深蓝色 一般(info)浅蓝色 默认(default)灰色
+-->
+<!--bootstrap 叫栅格化布局-->
+<div class="container" id="app">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover">
+                <catption class="h3 text-warning">
+                    商品列表
+                </catption>
+                <tr>
+                    <th class="text-center">商品名称</th>
+                    <th class="text-center">商品价格</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                <tr class="text-center">
+                    <td>iphone</td>
+                    <td>100</td>
+                    <td><button class="btn btn-danger btn-sm">删除</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            phones:[{name:'三星',price:30},{name:'华为',price:40},{name:'苹果',price:100}]
+        }
+    })
+</script>
+</body>
+</html>
