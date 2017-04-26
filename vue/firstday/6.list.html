@@ -57,20 +57,23 @@
     var vm = new Vue({
         el:'#app',
         data:{
-            product:{price:'',name:''},
+            product:{price:'',name:'',count:1}, //初始化要保证所有数据都存在，否则添加后不会被响应到页面
             phones:[{name:'三星',price:30,count:1},{name:'三星',price:30,count:1},{name:'华为',price:40,count:2},{name:'苹果',price:100,count:3}]
         },
         methods:{
             add(){
                 var obj = this.product; //获取到输入框中的内容
-                obj.count = 1; //增加数量
-                this.product = {}; //输入后清空输入框
+                this.product = {price:'',name:'',count:1}; //输入后清空输入框
                 this.phones.push(obj); //将对象插入到数组中
             },
             total(){ //如果在页面上是通过{{total()}} 页面任何一个数据变化都会重新total
-                var n = this.phones.reduce(function (prev,next) {
+                var n = 0;
+                for(var i = 0; i<this.phones.length;i++){
+                    n+=this.phones[i].price*this.phones[i].count
+                }
+                /*var n = this.phones.reduce(function (prev,next) {
                     return prev+next.price*next.count;
-                },0); //不要取prev的值 让prev一直是个数字
+                },0); //不要取prev的值 让prev一直是个数字*/
                 return n;
             },
             remove(phone){
