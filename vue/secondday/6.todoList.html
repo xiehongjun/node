@@ -21,7 +21,7 @@
 <!--下面的待办事项-->
 <div class="container" id="app">
     <div class="h4 text-danger">
-        亲，你还有 10 件事要办
+        亲，你还有 {{total}} 件事要办
     </div>
     <input type="text" class="form-control" placeholder="请输入，你要办的事情" v-model="editTodo" @keyup.enter="addTodo">
     <ul class="nav nav-pills" style="margin: 10px">
@@ -33,7 +33,7 @@
         <!--如果当前li上有del样式 则表示完成了-->
         <!--1.实现勾选添加del样式-->
         <!--2.计算出待办数量-->
-        <li class="list-group-item" v-for="todo of todos" >
+        <li class="list-group-item" v-for="todo of todos" :class="{del:todo.isChecked}">
             <input type="checkbox" v-model="todo.isChecked">
             <span>{{todo.title}}</span>
             <button class="pull-right" @click="remove(todo)">
