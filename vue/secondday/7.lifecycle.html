@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="app">{{msg}}</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    //钩子函数 每个阶段都会调用这个函数
+
+    var vm = new Vue({
+        data:{msg:'hello',age:1},
+        //beforeCreate(){alert('创建之前')}, 不使用
+        created(){alert('创建完成')}, //创建完成后 可以获取数据           //beforeMount(){alert('开始挂载')},
+        mounted(){alert('挂载完成')}, //在mounted中也可以获取数据
+        //更新  拦截 数据更新就会调用这两个函数
+        beforeUpdate(){alert('开始更新')},
+        updated(){alert('更新之后')},
+        beforeDestroy(){alert('销毁之前')},
+        destroyed(){alert('销毁之后')},
+        message:'hello'
+    });
+    vm.$mount('.app'); //等价于写el:'.app'
+    //vm.$destroy();//销毁组件
+    console.log(vm.$data); //就是我们在data后写的对象
+    console.log(vm.$options.message);//在实例上自定义数据，没有放在data中
+    //所有带$的都是vue内部属性，vue提供的
+</script>
+</body>
+</html>
