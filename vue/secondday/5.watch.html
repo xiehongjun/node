@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="message">
+    <!--修改message后 先显示等待...,过两秒后显示 message,zpfx-->
+    {{content}}
+</div>
+<!--computed 不能使用异步方式,想要有个过程 做不到-->
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    //如果简单的逻辑 首先要想到watch 如果复杂的用computed 如果是"异步"并且有"中间过程"，用watch
+    //methods computed watch
+    var vm = new Vue({
+        el:'#app',
+        data:{message:'hello',content:''},
+        watch:{
+            message(newVal,oldVal){
+                this.content = '等待中';
+                setTimeout(function () {
+                    vm.content = newVal+'zfpx';
+                },2000);
+            }
+        }
+        /*computed:{
+            //第一次获取content 值是等待中，computed没有依赖别人，代码不会再执行了，已经return结束了
+            //computed适合做复杂逻辑，简单的只能给watch,当一个值改变触发某件事情时使用watch
+            content(){
+                var that = this;
+                setTimeout(function () {
+                    this.content =  that.message+'zfpx';
+                },2000);
+                return '等待中...';
+            }
+        }*/
+    })
+</script>
+</body>
+</html>

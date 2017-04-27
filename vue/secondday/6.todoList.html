@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+        .del{text-decoration: line-through;
+            color: #c8c8c8;}
+    </style>
+</head>
+<body>
+<!--导航-->
+<div class="navbar navbar-inverse">
+    <div class="container-fluid container">
+        <div class="navbar-header">
+            <a class="navbar-brand">ToDoList</a>
+        </div>
+    </div>
+</div>
+<!--下面的待办事项-->
+<div class="container">
+    <div class="h4 text-danger">
+        亲，你还有 10 件事要办
+    </div>
+    <input type="text" class="form-control" placeholder="请输入，你要办的事情">
+    <ul class="nav nav-pills">
+        <li class="active"><a href="">全部完成</a></li>
+        <li><a href="">已完成</a></li>
+        <li><a href="">未完成</a></li>
+    </ul>
+
+    <ul class="list-group">
+        <li class="list-group-item del">
+            <input type="checkbox">
+            <span>1.好好学习</span>
+            <button class="pull-right">&times;</button>
+        </li>
+        <li class="list-group-item">
+            <input type="checkbox">
+            <span>1.好好学习</span>
+            <button class="pull-right">&times;</button>
+        </li>
+    </ul>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+</body>
+</html>
