@@ -44,7 +44,7 @@
                    &times;
                </button>
            </div>
-           <input type="text" v-model="todo.title" v-show="currentTodo==todo" @keyup.13="reset" @blur="reset">
+           <input type="text" v-model="todo.title" v-show="currentTodo==todo" @keyup.13="reset" @blur="reset" v-auto-focus="currentTodo==todo">
         </li>
     </ul>
 </div>

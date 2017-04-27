@@ -11,6 +11,15 @@ var vm = new Vue({
         state:'',
         currentTodo:''//当前点的是谁
     },
+    directives:{ //指令,可以用来操作dom
+        autoFocus(ele,bindings){
+            //ele代表的是input元素
+            //bindings.value 代表的是currentTodo==todo的结果
+            if(bindings.value){
+                ele.focus();
+            }
+        }
+    },
     methods:{
         reset(){ //让当前点击的变成空
             this.currentTodo = '';
