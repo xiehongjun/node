@@ -15,15 +15,20 @@
 <script>
     var vm = new Vue({
         el:'#app',
-        data:{checkList:[{isChecked:true},{isChecked:false},{isChecked:true}],},
+        data:{checkList:[{isChecked:true},{isChecked:true},{isChecked:true}]},
         methods:{},
         computed:{
             checkAll:{
-                get(){
-
+                get(){ //根据checkList数组中如果有false,返回false
+                    var obj = this.checkList.find((item)=>{ //如果返回true表示找到，如果没找到 是undefined
+                        return !item.isChecked;
+                    });
+                    return obj?false:true;
                 },
-                set(){
-
+                set(val){ //如果选中val为true，让数组中所有的值都为true
+                    for(var v of this.checkList){
+                        v.isChecked = val;
+                    }
                 }
             }
         }
