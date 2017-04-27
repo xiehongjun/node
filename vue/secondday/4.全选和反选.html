@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <!--点击全选可以控制 下面的所有checkbox,如果有一个checkbox没选中 全选为不选中状态-->
+    <!--全选的值依赖于下面的checkbox，如果都为true则选中，给全选赋值要改变下面的checkbox的值-->
+    全选 <input type="checkbox" v-model="checkAll"> <br>
+    <input type="checkbox" v-for="check in checkList" v-model="check.isChecked">
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{checkList:[{isChecked:true},{isChecked:false},{isChecked:true}],},
+        methods:{},
+        computed:{
+            checkAll:{
+                get(){
+
+                },
+                set(){
+
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <!--时刻监听 数据的变化，只要有数据变，不管和sum函数有没有关系都会执行-->
+    <!--{{sum()}}<br>-->
+    <!--计算属性，根据某个值计算出新值，当这个值变化后会重新计算，别的数据改变不会受到影响-->
+    {{sum}} <br>
+    价格{{price}} <br>
+    数量 <input type="text" v-model="count"> <br>
+    名字 <input type="text" v-model="name"> <br>
+</div>
+<!--计算“属性” 不是方法，可以根据已有属性 推断出一个新的属性来-->
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{price:100,count:10,name:'飞机'},
+        computed:{
+            //sum属性由两部分组成 （获取，设置）
+            sum:{
+                get(){ //展示就是获取
+                    //如果price和count变化会导致 sum变化
+                    return this.price * this.count;
+                },
+                set(val){ //赋值就是设置 vm.sum = 100;
+                    //sum变化有可能会改变name变化，computed属性中this依然是vm
+                    this.name = val;
+                }
+            }
+            /*sum() {
+                return this.price * this.count;
+            }*/
+        }
+    });
+</script>
+</body>
+</html>
