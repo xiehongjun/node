@@ -20,8 +20,9 @@ var vm = new Vue({
            })
         }
     },
-    mounted(){ //页面加载完成后会调用此函数
-        this.todos = JSON.parse(localStorage.getItem('todos'));
+    //vue提供的生命周期的方法，钩子函数
+    mounted(){ //页面加载完成后会调用此函数 ,如果本地没有数据默认是空数组
+        this.todos = JSON.parse(localStorage.getItem('todos')) || [];
     },
     watch:{
         todos:{
