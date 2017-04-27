@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .back{background: red}
+        .font{font-size:50px;color: white}
+        .box{box-shadow: 0 0 10px 5px #ccc}
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--动态绑定的class和原生的class 可以共存，如果覆盖问题，动态覆盖静态-->
+    <!--对象绑定方式 {样式:条件,样式1:条件} -->
+    <!--数组绑定方式-->
+    <!--对象+数组-->
+    <div class="back" :class="{font:flag}">红色背景</div>
+    <div :class="[b,{font:flag},'box']">红色背景</div>
+    <!--行内样式尽量替换成class-->
+    <!--对象写法 {key:value,key:value}-->
+    <!--数组写法-->
+    <div :style="{background:'green',fontSize:'50px'}">绿色</div>
+    <div :style="[s1,s2]">行内样式</div>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    //class
+    var vm = new Vue({
+        el:'#app',
+        data:{flag:true,b:'back',c:'font',s1:{background:'blue'},s2:{color:'yellow'}}
+    });
+</script>
+</body>
+</html>

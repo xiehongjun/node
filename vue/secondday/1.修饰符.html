@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <!--按键修饰符，vue提供了大量的按键修饰  space esc left right ... 可以用keycode代替-->
+    <!--当keyCode 等于我们写的值得时候触发事件-->
+    <input type="text" v-model="query" @keyup.65="addFruit">
+    <ul>
+        <li v-for="fruit in fruits">{{fruit}}</li>
+    </ul>
+    <!--事件冒泡 阻止冒泡 .stop 将事件模式变成捕获.capture-->
+    <!--.capture事件默认是双向的 先捕获 在冒泡-->
+    <div @click="parent">
+        parent
+        <!--.self只想点child触发 child方法，点孙子 不触发-->
+        <div @click.self.stop="child">
+            child
+            <div @click="grandson">grandson</div>
+        </div>
+    </div>
+    <!--事件模型.stop .capture .self .prevent 修饰符可以累加使用-->
+    <a href="http://www.baidu.com" @click.prevent="grandson">去百度</a>
+    <!--触发一次 执行一次后解绑事件-->
+    <div @click.once="die">我死了</div>
+    <!--动态去取数据里的query值 绑定动态数据 使用v-bind 简写:-->
+    <div :title="query">划过我显示hello</div>
+    <img :src="src" :alt="query" :width="w" >
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{fruits:['苹果','香蕉','橘子'],query:'hello',src:'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',w:'200px'},
+        methods:{
+            die(){
+                alert('我死了');
+            },
+            grandson(){
+                alert('grandson')
+            },
+            parent(){
+                alert("parent")
+            },
+            child(){
+                alert("child");
+            },
+            addFruit(){
+                    this.fruits.push(this.query);
+                    this.query = '';
+            }
+        }
+    })
+</script>
+</body>
+</html>
