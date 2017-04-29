@@ -91,3 +91,19 @@ git diff --cached
 ```
 git reset --hard 版本号
 ```
+
+## 查看所有历史
+```
+git reflog
+```
+
+## 搜索
+```
+git log --grep=hello
+git log --author=wake
+```
+
+## 删除本次的add
+```
+git reset HEAD 文件名
+```
