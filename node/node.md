@@ -107,3 +107,32 @@ git log --author=wake
 ```
 git reset HEAD 文件名
 ```
+
+## 查看当前项目下的分支
+```
+git branch
+```
+
+## 创建分支
+```
+git branch dev
+```
+## 切换分支
+```
+git checkout dev
+```
+## 删除分支
+```
+git branch -D dev
+```
+## 创建并切换分支
+```
+git checkout -b dev
+```
+
+## 合并分支
+- 默认master是主干，用主干和并分支
+```
+```
+
+> 合并分支后 被合并的分支删除即可
