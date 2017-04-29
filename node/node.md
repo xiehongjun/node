@@ -30,7 +30,10 @@ ls -a
 ```
 rm -rf .git
 ```
-
+## 删除文件
+```
+rm index.txt
+```
 ## 创建文件
 ```
 touch index.txt
@@ -42,9 +45,28 @@ cat index.txt
 ```
 
 ## vi编辑
+- 不能编辑文件夹
 ```
 vi index.txt
 i 插入模式
 ESC :wq保存并退出
 q! 强制退出
+```
+
+
+## 添加暂存区
+```
+git add .
+git add -A
+git add 文件名
+```
+
+## 添加历史区
+```
+git commit -m '消息'
+```
+
+## 查看版本 
+```
+git log
 ```
