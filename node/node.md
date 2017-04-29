@@ -70,3 +70,24 @@ git commit -m '消息'
 ```
 git log
 ```
+
+## 代码对比
+- 工作区和暂存区
+```
+git diff
+```
+- 工作区和历史区
+```
+git diff 分支名
+```
+- 暂存区和历史区
+```
+git diff --cached
+```
+
+> 如果执行过一次增加到版本库 git commit -a -m"write hello"
+
+## 回滚某个版本
+```
+git reset --hard 版本号
+```
