@@ -43,7 +43,7 @@ setTimeout(function () {
 });*/
 //默认setTimeout有可能会比setImmediate先执行
 
-//5.process 代码执行时会开一个进程，代码运行完后进程就结束了
+//5.process 代码执行时会开一个进程，代码运行完后进s程就结束了
 /*
 setInterval(function () {
     //打印当前进程id
