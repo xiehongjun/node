@@ -75,7 +75,38 @@ npm uninstall jquery --save 卸载
 npm install
 ```
 
+#### 安装指定版本
+```
+npm info jquery 查看版本
+npm install jquery@2.2.2 
+```
+
 > 本地安装会默认安到node_modules中，package.json可以记住安装过的文件。
+
+## yarn
+- 也是安装模块的方式,和npm一样。
+```
+npm install yarn -g
+```
+- 初始化package.json
+```
+yarn init -y
+```
+- 安装模块
+如果是项目依赖则不用标注，如果是开发依赖需要标注(-dev)
+```
+yarn add jquery
+yarn add gulp -dev
+yarn remove gulp -dev
+```
+- 安装依赖
+```
+yarn install
+```
+
+## 核心模块
+内置的，node自带的模块
+
 
 ## 分类
 - 文件模块

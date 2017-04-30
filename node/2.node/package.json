@@ -9,5 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^2.2.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }
