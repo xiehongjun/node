@@ -25,6 +25,15 @@ Girl.prototype.emit = function (eventName,...others) { //剩余运算符
         });
     }
 };
+//移除绑定 将对象中的对应的数组某项删除掉 在触发之前就不会执行了
+Girl.prototype.removeListener= function (eventName,callback) {
+    if(this._events[eventName]){
+        //最终返回新的数组 在函数返回true表示将当前项放到新数组中，返回false则不放
+        this._events[eventName] = this._events[eventName].filter(function (item) {
+            return callback != item;
+        });
+    }
+};
 var girl = new Girl();
 var eat = function (who) { console.log(who+'吃')};
 var shopping = function (who) {console.log(who+'购物')};
@@ -35,4 +44,8 @@ girl.on('变漂亮',cry);
 girl.removeListener('变漂亮',cry); //移除绑定事件
 //当触发事件后会将绑定的事件依次触发
 girl.emit('变漂亮','xxx','xxx1');
+girl.emit('变漂亮','xxx','xxx1');
+girl.emit('变漂亮','xxx','xxx1');
+//多次触发 执行多次  on emit removeListener
+//node自带事件模块 封装了on emit ... 的方法 我们可以直接使用
 
