@@ -42,3 +42,10 @@ hexo d 发布
 ```
 zuyuan.github.io
 ```
+
+## 找到theme
+找到github地址,拉取到本地，更改_confg.yml 指定新的主题名字
+```
+hexo g 
+hexo d
+```
