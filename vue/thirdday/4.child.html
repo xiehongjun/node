@@ -5,18 +5,22 @@
     <title>Document</title>
 </head>
 <body>
-<div id="app"></div>
+<div id="app">
+    <!--使用 水果 甜的 西瓜-->
+    <fruit></fruit>
+</div>
 <script src="node_modules/vue/dist/vue.js"></script>
 <script>
-    var waterMelon = {template:'西瓜'};
+    //子组件要在父组件的模板中使用
+    var waterMelon = {template:'<div>西瓜</div>'};
     var sweet = {
-        template:'<div>甜的</div>',
+        template:'<div>甜的 <water-melon></water-melon></div>',
         components:{
             waterMelon:waterMelon
         }
     };
     var fruit = {
-        template:'<div>水果</div>',
+        template:'<div>水果 <sweet></sweet></div>',
         components:{
             sweet:sweet
         }
