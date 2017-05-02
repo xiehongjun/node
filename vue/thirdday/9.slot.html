@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--npm install bootstrap --save-->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+
+</head>
+<body>
+<div id="app">
+    <!--slot 插槽-->
+    <!--具名slot 通过组件中传入模板，每个模板指定slot名字，这个名字和定制模板匹配到，会替换定制的模板-->
+    <alert>
+        <div slot="footer">这是弹框的底部</div>
+        <div>
+            <i>错误</i>
+            <p>出bug了</p>
+        </div>
+        <div slot="header">这是弹框的头部</div>
+        <div>xxxx</div>
+    </alert>
+
+</div>
+</body>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        components:{
+            alert:{
+                //vue中提供的一个标签，用来做模板定制的
+                template:`<div class="alert alert-danger">
+                   <slot name="header">
+                    这是头部
+                   </slot>
+                   <slot></slot>
+                   <slot name="footer">
+                   </slot>
+                </div>`
+            }
+        }
+    });
+</script>
+</html>
