@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    爸爸有{{m}}
+    <!--儿子$emit后会触发自己身上的have-money方法，对应的函数是父亲身上的，儿子触发父亲的函数-->
+    <child @have-money="say"></child>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<template id="child">
+    <div>
+        儿子有{{money}}
+        <button @click="tell">告诉爸爸我有多少钱</button>
+    </div>
+</template>
+<script>
+    //this当前实例 会有$emit 向上发射
+    var child = {
+        template:'#child',
+        methods:{
+            tell(){
+                //这个emit是用来告诉父亲我有多少钱
+                this.$emit('have-money',this.money)
+            }
+        },
+        data(){
+            return {money:100}
+        }
+    };
+    var vm = new Vue({
+        el:'#app',
+        methods:{
+          say(money){
+              this.m = money
+          }
+        },
+        data:{m:''},
+        components:{ child }
+    });
+</script>
+</body>
+</html>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <div id="app">
-    <child :c="count"></child>
+    <child :c="count" a="你好"></child>
 </div>
 <script src="node_modules/vue/dist/vue.js"></script>
 <script>
@@ -22,6 +22,7 @@
                 //default默认值，不传递的情况下使用默认值，传了使用传递的值
                 //自定义验证器
                 props: {
+                    a:{type:[Boolean,Array,Object]},
                     c: {
                         type:[Number,String,Boolean],
                         default:'珠峰培训',
