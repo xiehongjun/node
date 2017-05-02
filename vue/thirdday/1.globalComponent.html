@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <!--在标签中不能使用大写,标签名字多个单词时必须用短横线隔开，-->
+    <my-component></my-component>
+</div>
+<div id="app1">
+    <my-component></my-component>
+</div>
+<template id="hello">
+    <div>
+        <div>Hello</div>
+        <div>Hello</div>
+    </div>
+</template>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+     //全局注册,在所有实例中都可以使用这个组件
+     //组件需要行为 结构 数据
+     //组件的模板中只能有一个根元素
+    Vue.component('myComponent',{
+         template:'#hello' //通过模板的id可以引用这个组件
+    });
+    var vm = new Vue({});
+    vm.$mount('#app');
+    var vm1 = new Vue({});
+    vm1.$mount('#app1');
+     //beforeCreate created beforeMount mounted
+     //beforeUpdate updated beforeDestroy destroyed
+     //el,data,methods,computed
+
+</script>
+</body>
+</html>
