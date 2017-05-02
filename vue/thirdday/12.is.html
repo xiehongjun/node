@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="node_modules/vue/dist/vue.js"></script>
+<div id="app">
+    <table>
+        <!--is可以指定当前标签内插入什么元素 is可以防止解析出错-->
+        <!--<tr :is="'temp'"></tr>-->
+    </table>
+    <!--template 没有意义 component 组件标签 is是谁就会显示哪个组件-->
+    <!--radio中 默认没有绑定数据 要给value值，这个value值会映射到radio上，如果v-model和value相等则被选中-->
+    <input type="radio" v-model="rad" value="home">
+    <input type="radio" v-model="rad" value="list">
+    <!--缓存组件的上一次的状态,防止每次切换时重新渲染组件-->
+    <keep-alive>
+        <component :is="rad"></component>
+    </keep-alive>
+</div>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{rad:'home'},
+        components:{
+            home:{template:'<div @click="changeColor" ref="ho">Home</div>',
+                methods:{
+                    changeColor(e){
+                        //操作DOM的api，尽量不要使用
+                        this.$refs.ho.style.background = 'red';
+                        //e.target.style.background = 'red'
+                    }
+                }
+            },
+            list:{template:'<div>List</div>'},
+        }
+    })
+</script>
+</body>
+</html>
