@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <child :c="count"></child>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            count:201
+        },
+        components:{
+            child:{
+                //required:true 表示属性必须传递
+                //type可以使用的类型
+                //default默认值，不传递的情况下使用默认值，传了使用传递的值
+                //自定义验证器
+                props: {
+                    c: {
+                        type:[Number,String,Boolean],
+                        default:'珠峰培训',
+                        validator(val){ //校验函数
+                            return val>200;//返回false校验失败
+                        }
+                    }
+                },
+                //props:['c'],
+                template:`<div>儿子组件 数量{{c}}</div>`
+            }
+        }
+    })
+</script>
+</body>
+</html>

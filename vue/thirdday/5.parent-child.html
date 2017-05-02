@@ -21,12 +21,25 @@
             food:'蔬菜'
         },
         components:{
+            //儿子不能直接改变父亲的数据 ,如果要修改可以将父亲的数据修改后，不覆盖掉原数据
             child:{
                 props:["msg","greens"],//data相当于是子组件的数据了
-                template:`<div>做{{msg}}</div>`,
+                computed:{
+                    meat(){
+                       return '加工后的'+this.msg;
+                    }
+                },
+                /*data(){
+                    return {meat: '加工后的'+this.msg}
+                },*/
+                /*mounted(){ 页面加载后就更新数据
+                    this.msg =  '加工后的'+this.msg
+                },*/
+                template:`<div>儿子做{{meat}} <grandson :greens="greens"></grandson></div>`,
                 components:{ //孙子做蔬菜
                     grandson:{
-                        template:'<div>孙子做{{meat}}</div>'
+                        props:["greens"],
+                        template:'<div>孙子做{{greens}}</div>'
                     }
                 }
             }
