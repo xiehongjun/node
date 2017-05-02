@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--recursive 递归组件，自己调用自己，必须要有中断条件
+    树 有子节点
+-->
+<!--<ul>
+    <li>
+        父亲
+        <ul>
+            <li>大儿子
+                <ul>
+                    <li>大孙子</li>
+                    <li>中孙子
+                        <ul>
+                            <li>大曾孙子</li>
+                            <li>小曾孙</li>
+                        </ul>
+                    </li>
+                    <li>小孙子</li>
+                </ul>
+            </li>
+            <li>小儿子</li>
+        </ul>
+    </li>
+</ul>-->
+<div id="app">
+    <tree :datas="datas"></tree>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    //默认情况下递归组件是不执行的，要指定name属性(只在局部组件中需要加)
+    /*Vue.component('tree',{
+        template:'<tree></tree>'
+    });*/
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            datas:{
+                name:'父亲',
+                children:[
+                    {name:'大儿子',
+                        children:[
+                            {name:'大孙子'},
+                            {name:'中孙子',
+                                children:[
+                                    {name:'大曾孙'},
+                                    {name:'小曾孙'}
+                                ]
+                            },
+                            {name:'小孙子'}
+                        ]},
+                    {name:'小儿子'}
+                ]
+            }
+        },
+        components:{
+            tree:{
+                name:'tree',
+                props:['datas'],
+                template:`
+                <ul>
+                    <li>{{datas.name}}
+                        <tree v-for="(child,key) in datas.children" :datas="child" :key="key"></tree>
+                    </li>
+                </ul>
+                `
+            }
+        }
+    })
+</script>
+</body>
+</html>
