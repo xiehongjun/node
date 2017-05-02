@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <brother-one></brother-one>
+    <brother-two></brother-two>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    //事件车，通过事件车的方式传递数据 eventBus
+    //实例上 有$emit $on
+    //创建一个实例 让brotherOne 和brotherTwo共用一个事件机制
+    var bus = new Vue();
+    var brotherOne  = {
+        template:`<div>兄弟1
+                    <button @click="sendFood">给兄弟二送吃的</button>
+                  </div>`,
+        data(){
+            return {food:'猪肉'}
+        },
+        methods:{
+            sendFood(){
+                bus.$emit('送吃的',this.food);
+            }
+        }
+    };
+    var brotherTwo  = {
+        mounted(){
+            bus.$on('送吃的',(food)=>{ //这个函数中的this指定的不是brotherTwo
+                this.meat = food;
+            });
+        },
+        template:`<div>兄弟2 {{meat}}</div>`,
+        data(){
+            return {meat:'茄子'}
+        }
+    };
+    var vm = new Vue({
+        el:'#app',
+        components:{
+            brotherOne,
+            brotherTwo
+        }
+    })
+</script>
+</body>
+</html>

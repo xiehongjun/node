@@ -8,6 +8,7 @@
 <div id="app">
     爸爸有{{m}}
     <!--儿子$emit后会触发自己身上的have-money方法，对应的函数是父亲身上的，儿子触发父亲的函数-->
+    <!--不要写成say() 因为会自动的给say传递参数，如果写了()相当于没有传递任何参数-->
     <child @have-money="say"></child>
 </div>
 <script src="node_modules/vue/dist/vue.js"></script>
