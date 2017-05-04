@@ -20,6 +20,7 @@
         <router-link to="/food/meat">meat</router-link>
         <router-link to="/food/greens">greens</router-link>
         <router-view></router-view>
+        {{message}}
     </div>
 </template>
 <template id="drink">
@@ -33,7 +34,28 @@
 </template>
 <script>
     //默认页面首页router-view是空的 1）配置一个默认页面  2）直接跳转到食物路由上
-   var food = {template:'#food'};
+   var food = {
+       data(){
+         return {message:'hello'}
+       },
+       template:'#food',
+       //beforeEach,beforeEnter,beforeRouteEnter
+       //不管能不能获取 ，都跳转页面
+       mounted(){
+           setTimeout(()=>{
+               this.message = 'world';
+           },2000);
+       },
+       //数据获取不到，不跳转页面
+       /*beforeRouteEnter(to,from,next){
+           console.log(100); //一般会在这个函数获取数据，不能使用this
+           setTimeout(()=>{
+               next(vm=>{
+                   vm.message = 'world';
+               }); //vm代表的当前实例
+           },2000);
+       }*/
+   };
    var drink = {template:'#drink'};
    var type = {
        //路径参数 在路径中有随机值  /drink/1/2  /drink/:name/:age  params:{name:1,age:2}
@@ -56,12 +78,17 @@
             children:[ //子路由不能写/,/代表的是根路径，匹配规则为 /food/meat
                 {path:'meat',component:{template:'<div>肉</div>'}},
                 {path:'greens',component:{template:'<div>蔬菜</div>'}},
-            ]
+            ],
+            //beforeEach
+            beforeEnter(to,from,next){ //同beforeEach，范围小了
+                next(); //调用next才可以继续执行
+            }
         },
         {
             path:'/drink',
             component:drink,
-            children:[ // /drink/type/xxx
+            children:[ // /drink/type/1
+                    //这个值必须要有但是可以随机
                 {path:'type/:id',component:type}
             ]
         },
@@ -69,12 +96,31 @@
         //路由是从上到下匹配的，到最下面都没匹配到会走到* 跳转到/food上
    ];
    var router = new VueRouter({
+       //mode:'history', //变成浏览管理历史记录 路径不在是#/food  localhost:63342/food,不能直接刷新浏览器 因为页面不存在，服务需要提供支持
        routes
    });
    var vm = new Vue({
        el:'#app',
        router
-   })
+   });
+   //router（在任何地方都可以使用） = this.$router（在组件中使用） 都拥有路由的方法
+   //router.push 跳转页面 会产生历史管理
+   //router.replace 会跳转页面，不产生历史管理
+   //router.beforeEach(to,from,next) 当路由切换时候 会触发这个函数，范围最大，任何路由切换都会触发此函数
+    /*
+    * to 去哪个路由
+    * from 从哪个路由来的
+    * next表示是否向下执行，是一个函数 如果调用next()表示继续，否则卡在这里不动
+    * */
+    router.beforeEach((to,from,next)=>{
+        //用来校验权限，应用场景：可以校验是否登录成功，成功则继续，否则跳转到登录页
+       /* if(to.path == '/drink'){
+            next({path:'/food'});//next中可以传递参数 表示去哪 to="{path:'/drink'}"
+        }else{
+            next();
+        }*/
+       next();
+    });
 </script>
 </body>
 </html>
