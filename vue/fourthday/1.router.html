@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--2.0中的路由-->
+<div id="app">
+    <!--当路由匹配到后，会将组件插入到router-view中-->
+    <router-link to="/home">首页</router-link>
+    <router-link to="/list">列表页</router-link>
+    <!--会自动转换成a标签-->
+    <router-view></router-view>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script src="node_modules/vue-router/dist/vue-router.js"></script>
+<!--引用vue  Vue  引用vue-router VueRouter-->
+<script>
+    //什么叫路由：不同的路径 返回不同的内容，spa 不同的路径显示不同的组件
+    var home = {template:'<div>首页</div>'};
+    var list = {template:'<div>列表页</div>'};
+    //默认是hash #/home
+    const routes = [
+        {path:'/home',component:home},
+        {path:'/list',component:list}
+    ];//路由映射表
+    var router = new VueRouter({routes});//这里的key也是固定的
+    var vm = new Vue({
+        el:'#app',
+        router //key的名字是固定的
+    });
+</script>
+</body>
+</html>
