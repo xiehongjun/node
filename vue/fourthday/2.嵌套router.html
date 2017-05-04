@@ -23,12 +23,31 @@
     </div>
 </template>
 <template id="drink">
-    <div>饮料</div>
+    <div>
+        <div>饮料</div>
+        <router-link to="/drink/type/1">雪碧</router-link>
+        <router-link to="/drink/type/2">可乐</router-link>
+        <router-link to="/drink/type/3">果粒橙</router-link>
+        <router-view></router-view>
+    </div>
 </template>
 <script>
     //默认页面首页router-view是空的 1）配置一个默认页面  2）直接跳转到食物路由上
    var food = {template:'#food'};
    var drink = {template:'#drink'};
+   var type = {
+       //路径参数 在路径中有随机值  /drink/1/2  /drink/:name/:age  params:{name:1,age:2}
+       //获取路由的信息，因为路由已经被注入到vm中
+       // 访问的路径/drink/type/3  匹配的规则/drink/type/:id => params:{id:3}
+       // this.$route(这里存放的都是关于路由的信息)  this.$route.params.id
+       // this.$router(这里存放的是路由的方法)
+       template:'<div>当前中第{{id}}</div>',
+       computed:{
+           id(){
+               return this.$route.params.id
+           }
+       }
+   };
    var routes = [
         {path:'',component:{template:'<div>这是默认的吃的....</div>'}},
         {
@@ -39,7 +58,13 @@
                 {path:'greens',component:{template:'<div>蔬菜</div>'}},
             ]
         },
-        {path:'/drink',component:drink},
+        {
+            path:'/drink',
+            component:drink,
+            children:[ // /drink/type/xxx
+                {path:'type/:id',component:type}
+            ]
+        },
         {path:'*',redirect:'/food'}
         //路由是从上到下匹配的，到最下面都没匹配到会走到* 跳转到/food上
    ];
