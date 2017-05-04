@@ -19,9 +19,10 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><router-link to="/home">首页</router-link></li>
-                <li><router-link to="/profile">个人中心</router-link></li>
-                <li><a>退出</a></li>
-                <li><router-link to="/login">登录</router-link></li>
+                <!--template只支持 if语法-->
+                <li v-show="login"><router-link to="/profile">个人中心</router-link></li>
+                <li v-show="login"><a>退出</a></li>
+                <li v-show="!login"><router-link to="/login">登录</router-link></li>
             </ul>
         </div>
     </div>
@@ -180,13 +181,43 @@
             children:[
                 {path:'info',component:info},
                 {path:'about',component:about}
-            ]
+            ],
+            //备注:信息随意写
+            meta:{needLogin:true} //自定义一个属性需要登录才能进入此路由
         },
         {path:'/login',component:login},
         {path:'*',redirect:'/home'}
     ];
     var router = new VueRouter({routes});
+    //当路由切换的时候会调用beforeEach,权限判断
+    router.beforeEach((to,from,next)=>{
+        //在路由上有一个属性 此属性叫matched 默认是数组类型
+        //to.matched 匹配多个路由  /profile /profile/about
+        console.log(to.matched);//如果这个数组里有一个meta.needLogin
+        var flag = to.matched.some(item=>item.meta.needLogin);
+        if(flag){ //验证是否登录
+            if(Boolean(localStorage.getItem('login'))){
+                next();
+            }else{
+                next({path:'/login'});
+            }
+        }else{ //不用验证
+            next();
+        }
+    });
     var vm = new Vue({
+        //想控制导航，只能在vm中控制
+        data:{
+           login:true
+        },
+        methods:{
+          checkLogin(){ //如果直接访问profile没法阻止，应该在进入路由的时候，判断一下如果没登录，不进行跳转，跳转到登录页
+              this.login = localStorage.getItem('login') || false;
+          }
+        },
+        mounted(){
+           this.checkLogin();
+        },
         el:'#app',
         router
     });
