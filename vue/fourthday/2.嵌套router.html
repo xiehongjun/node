@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <!--声明式-->
+    <router-link :to="{path:'/food'}">food</router-link>
+    <router-link :to="{path:'/drink'}">drink</router-link>
+    <router-view></router-view>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script src="node_modules/vue-router/dist/vue-router.js"></script>
+<template id="food">
+    <!--只能拥有一个根节点-->
+    <div>
+        <div>食物</div>
+        <router-link to="/food/meat">meat</router-link>
+        <router-link to="/food/greens">greens</router-link>
+        <router-view></router-view>
+    </div>
+</template>
+<template id="drink">
+    <div>饮料</div>
+</template>
+<script>
+    //默认页面首页router-view是空的 1）配置一个默认页面  2）直接跳转到食物路由上
+   var food = {template:'#food'};
+   var drink = {template:'#drink'};
+   var routes = [
+        {path:'',component:{template:'<div>这是默认的吃的....</div>'}},
+        {
+            path:'/food',
+            component:food,
+            children:[ //子路由不能写/,/代表的是根路径，匹配规则为 /food/meat
+                {path:'meat',component:{template:'<div>肉</div>'}},
+                {path:'greens',component:{template:'<div>蔬菜</div>'}},
+            ]
+        },
+        {path:'/drink',component:drink},
+        {path:'*',redirect:'/food'}
+        //路由是从上到下匹配的，到最下面都没匹配到会走到* 跳转到/food上
+   ];
+   var router = new VueRouter({
+       routes
+   });
+   var vm = new Vue({
+       el:'#app',
+       router
+   })
+</script>
+</body>
+</html>
