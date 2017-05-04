@@ -39,14 +39,14 @@
     <div>登录</div>
 </template>
 <template id="slider">
-    <div class="slider">
+    <div class="slider" @mouseenter="clear" @mouseleave="autoplay">
         <div class="slider-inner">
-            <img :src="datas[0].path" :alt="datas[0].title">
+            <img :src="datas[index].path" :alt="datas[index].title">
         </div>
-        <span class="left">&lt;</span>
-        <span class="right">&gt;</span>
+        <span class="left" @click="go(prev)">&lt;</span>
+        <span class="right" @click="go(next)">&gt;</span>
         <div class="slider-bottom">
-            <a v-for="(item,index) of datas">{{index+1}}</a>
+            <a v-for="(item,index) of datas" @click="go(index)">{{index+1}}</a>
         </div>
     </div>
 </template>
@@ -60,15 +60,52 @@
 </style>
 <template id="home">
     <div>欢迎你~~~
-        <slider :datas="images"></slider>
+        <slider :datas="images" :delay="3000"></slider>
     </div>
 </template>
 <script>
     //轮播图组件
     var slider = {
+        data(){
+          return {index:0,timer:null}
+        },
+        computed:{
+          prev(){
+              //prev是根据 index来的 永远是index的上一个，如果已经是0，应该是最后一个
+              if(this.index == 0){
+                  return this.datas.length - 1;
+              }else{
+                  return this.index -1;
+              }
+          },
+          next(){ //下一个值 比如说index 0  next 1
+              if(this.index == this.datas.length - 1){
+                  return 0;
+              }else{
+                  return this.index + 1;
+              }
+          }
+        },
+        mounted(){//页面加载完成后开始自动轮播
+           this.autoplay();
+        },
+        methods:{
+          go(index){
+              this.index = index;
+          },
+          clear(){
+            clearInterval(this.timer);
+          },
+          autoplay(){
+              this.timer = setInterval(()=>{
+                  this.go(this.next);//去下一张
+              },this.delay);
+          }
+        },
         template:'#slider',
         props:{
-            datas:{type:Array,required:true}
+            datas:{type:Array,required:true},
+            delay:{type:Number,default:5000}
         }
     };
     //首页组件
