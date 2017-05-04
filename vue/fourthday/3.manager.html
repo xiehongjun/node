@@ -5,6 +5,10 @@
     <title></title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="node_modules/animate.css/animate.css">
+    <style>
+        /*全部优先使用*/
+        .router-link-active{color:red !important;}
+    </style>
 </head>
 <body>
 <div id="app">
@@ -47,7 +51,22 @@
     </div>
 </template>
 <template id="login">
-    <div>登录</div>
+    <div>
+        <div class="alert alert-danger" v-show="!userInfo&&username!=''">用户不能小于3位不能大于6位</div>
+        <form>
+            <div class="form-group">
+                <label for="username" class="control-label">用户名</label>
+                <input type="text" id="username" autocomplete="off" class="form-control" placeholder="请输入用户名" v-model="username">
+            </div>
+            <div class="form-group">
+                <label for="password" class="control-label">密码</label>
+                <input type="text" id="password" autocomplete="off" class="form-control" placeholder="请输入密码" v-model="password">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" :disabled="!userInfo">登录</button>
+            </div>
+        </form>
+    </div>
 </template>
 <template id="slider">
     <div class="slider" @mouseenter="clear" @mouseleave="autoplay">
@@ -134,7 +153,16 @@
     };
     //登录组件
     var login = {
-        template:'#login'
+        template:'#login',
+        data(){
+            //初始化数据
+            return {username:'',password:''}
+        },
+        computed:{
+            userInfo(){ //反回false则弹出框
+                return this.username.length>3&&this.username.length<6
+            }
+        }
     };
     //关于我
     var about = {
@@ -155,6 +183,7 @@
             ]
         },
         {path:'/login',component:login},
+        {path:'*',redirect:'/home'}
     ];
     var router = new VueRouter({routes});
     var vm = new Vue({
