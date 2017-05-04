@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box{width: 200px;height: 200px;background: red}
+    </style>
+    <link rel="stylesheet" href="node_modules/animate.css/animate.css">
+</head>
+<body>
+<div id="app">
+    <button @click="flag=!flag">{{flag?'隐藏':'显示'}}</button>
+    <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+        <div v-show="flag" class="box"></div>
+    </transition>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        data:{
+           flag:false
+        },
+        el:'#app'
+    });
+</script>
+</body>
+</html>

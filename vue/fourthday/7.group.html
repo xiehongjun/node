@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="node_modules/animate.css/animate.css">
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="query">
+        <!--transition-group默认是span-->
+    <transition-group tag="ul"  enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+        <li v-for="(a,index) in cloneList" :key="index">{{a}}</li>
+    </transition-group>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        computed:{
+            cloneList(){
+                return this.arr.filter(item=>{
+                    return item.toString().includes(this.query);
+                });
+            }
+        },
+        data:{
+            query:'',
+            arr:[1,2,3,4,5]//根据当前query的值计算一个新的数组
+        }
+    })
+</script>
+</body>
+</html>

@@ -30,7 +30,9 @@
         <div class="row">
             <div class="col-md-12">
                 <!--login组件会触发自定义的check方法 对应的checkLogin会被触发从而改变导航显示-->
-                <router-view @check="checkLogin"></router-view>
+                <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutLeft" >
+                    <router-view @check="checkLogin" style="position: absolute;top: 0;width: 100%;left:0;"></router-view>
+                </transition>
                 <!--<login  @check="checkLogin"></login>-->
             </div>
         </div>
@@ -73,8 +75,16 @@
 </template>
 <template id="slider">
     <div class="slider" @mouseenter="clear" @mouseleave="autoplay">
+        <!--show的默认值应该是false-->
         <div class="slider-inner">
-            <img :src="datas[index].path" :alt="datas[index].title">
+            <transition name="out">
+                <!--当前显示true index 0  show变为false  离开动画-->
+                <img :src="datas[index].path" :alt="datas[index].title" v-if="show">
+            </transition>
+            <transition name="in">
+                <!--index变为1 false->show 进入动画-->
+                <img :src="datas[index].path" :alt="datas[index].title" v-if="!show">
+            </transition>
         </div>
         <span class="left" @click="go(prev)">&lt;</span>
         <span class="right" @click="go(next)">&gt;</span>
@@ -83,6 +93,13 @@
         </div>
     </div>
 </template>
+<style>
+    img{position: absolute}
+    .slider{overflow: hidden}
+    .out-leave-active{-webkit-transition: all 1s; -webkit-transform: translate(-520px)}
+    .in-enter-active{-webkit-transition: all 1s;-webkit-transform: translate(0)}
+    .in-enter{-webkit-transform: translate(520px)}
+</style>
 <style>
     .slider{width: 520px;height: 280px; position: relative}
     .slider span{position: absolute;height: 60px;top:110px; display: block;width: 30px;background: #fff;text-align: center;line-height: 60px; cursor: pointer}
@@ -101,7 +118,7 @@
     //轮播图组件
     var slider = {
         data(){
-          return {index:0,timer:null}
+          return {index:0,timer:null,show:true}
         },
         computed:{
           prev(){
@@ -125,7 +142,12 @@
         },
         methods:{
           go(index){
-              this.index = index;
+              this.show = true;
+              setTimeout(()=>{
+                  this.index = index;
+                  this.show = false
+              },100);
+
           },
           clear(){
             clearInterval(this.timer);

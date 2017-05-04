@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box{width: 200px;height: 200px;background: red}
+        .v-enter-active{-webkit-transition: all 1s; opacity: 1;}
+        .v-enter{opacity: 0;}
+        .v-leave-active{opacity: 0;-webkit-transition: all 1s;}
+        .scale-enter-active{-webkit-transition: all 2s; opacity: 1;-webkit-transform: scale(1)}
+        .scale-enter{opacity: 0;-webkit-transform: scale(0)}
+        .scale-leave-active{opacity: 0;-webkit-transition: all 2s;-webkit-transform: scale(0)}
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="flag=!flag">{{flag?'隐藏':'显示'}}</button>
+    <transition>
+     <!--transition只支持单动画过渡-->
+        <div v-show="flag" class="box"></div>
+    </transition>
+    <!--name可以改变样式类型的前缀-->
+    <transition name="scale">
+        <!--transition只支持单动画过渡-->
+        <div v-show="flag" class="box"></div>
+    </transition>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        data:{
+           flag:false
+        },
+        el:'#app'
+    });
+</script>
+</body>
+</html>
