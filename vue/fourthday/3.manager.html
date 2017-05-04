@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="node_modules/animate.css/animate.css">
+</head>
+<body>
+<div id="app">
+    <div class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">管理信息系统</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><router-link to="/home">首页</router-link></li>
+                <li><router-link to="/profile">个人中心</router-link></li>
+                <li><a>退出</a></li>
+                <li><router-link to="/login">登录</router-link></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <router-view></router-view>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script src="node_modules/vue-router/dist/vue-router.js"></script>
+<template id="profile">
+    <div>个人中心</div>
+</template>
+<template id="login">
+    <div>登录</div>
+</template>
+<template id="slider">
+    <div class="slider">
+        <div class="slider-inner">
+            <img :src="datas[0].path" :alt="datas[0].title">
+        </div>
+        <span class="left">&lt;</span>
+        <span class="right">&gt;</span>
+        <div class="slider-bottom">
+            <a v-for="(item,index) of datas">{{index+1}}</a>
+        </div>
+    </div>
+</template>
+<style>
+    .slider{width: 520px;height: 280px; position: relative}
+    .slider span{position: absolute;height: 60px;top:110px; display: block;width: 30px;background: #fff;text-align: center;line-height: 60px; cursor: pointer}
+    .slider .left{left: 10px}
+    .slider .right{right: 10px}
+    .slider-bottom{position: absolute;height: 30px;bottom: 0;width: 100%;line-height: 30px;background: rgba(0,0,0,.45); text-align: right}
+    .slider-bottom a{color: #fff;font-size: 25px;margin: 0 10px ; display: inline-block; cursor: pointer}
+</style>
+<template id="home">
+    <div>欢迎你~~~
+        <slider :datas="images"></slider>
+    </div>
+</template>
+<script>
+    //轮播图组件
+    var slider = {
+        template:'#slider',
+        props:{
+            datas:{type:Array,required:true}
+        }
+    };
+    //首页组件
+    var home = {
+        template:'#home',
+        data(){
+            return {images:[{path:'./1.jpg',title:'第一张图片'},{path:'./2.jpg',title:'第二张图片'},{path:'./3.jpg',title:'第三张图片'}]}
+        },
+        components:{ slider }
+    };
+    //个人中心组件
+    var profile = {
+        template:'#profile'
+    };
+    //登录组件
+    var login = {
+        template:'#login'
+    };
+    var routes = [
+        {path:'/home',component:home},
+        {path:'/profile',component:profile},
+        {path:'/login',component:login},
+    ];
+    var router = new VueRouter({routes});
+    var vm = new Vue({
+        el:'#app',
+        router
+    });
+</script>
+
+<!--首页 /home 个人中心 /profile 登录 /login 退出 （如果没登录不能看到个人中心，本地存储中login为true则表示登录过 ，为false表示没登录过） -->
+<!--登录过显示  首页  个人中心 退出-->
+<!--没登录过显示  首页  登录-->
+</body>
+</html>
