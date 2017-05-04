@@ -32,8 +32,19 @@
 </div>
 <script src="node_modules/vue/dist/vue.js"></script>
 <script src="node_modules/vue-router/dist/vue-router.js"></script>
+<!--个人中心中包括两个子导航 info about-->
 <template id="profile">
-    <div>个人中心</div>
+    <div>
+        <div class="col-md-3">
+            <ul class="nav nav-stacked">
+                <li><router-link to="/profile/info">个人信息</router-link></li>
+                <li><router-link to="/profile/about">关于我</router-link></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <router-view></router-view>
+        </div>
+    </div>
 </template>
 <template id="login">
     <div>登录</div>
@@ -60,7 +71,8 @@
 </style>
 <template id="home">
     <div>欢迎你~~~
-        <slider :datas="images" :delay="3000"></slider>
+        <!--:可以把内容变成js-->
+        <slider :datas="images" :delay="5000"></slider>
     </div>
 </template>
 <script>
@@ -124,9 +136,24 @@
     var login = {
         template:'#login'
     };
+    //关于我
+    var about = {
+        template:'<div>我是天才</div>'
+    };
+    //个人信息
+    var info = {
+        template:'<div>信息</div>'
+    };
     var routes = [
         {path:'/home',component:home},
-        {path:'/profile',component:profile},
+        {
+            path:'/profile',
+            component:profile,
+            children:[
+                {path:'info',component:info},
+                {path:'about',component:about}
+            ]
+        },
         {path:'/login',component:login},
     ];
     var router = new VueRouter({routes});
