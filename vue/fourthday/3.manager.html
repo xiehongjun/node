@@ -21,7 +21,7 @@
                 <li><router-link to="/home">首页</router-link></li>
                 <!--template只支持 if语法-->
                 <li v-show="login"><router-link to="/profile">个人中心</router-link></li>
-                <li v-show="login"><a>退出</a></li>
+                <li v-show="login"><a @click="logout">退出</a></li>
                 <li v-show="!login"><router-link to="/login">登录</router-link></li>
             </ul>
         </div>
@@ -223,6 +223,11 @@
         methods:{
           checkLogin(){ //如果直接访问profile没法阻止，应该在进入路由的时候，判断一下如果没登录，不进行跳转，跳转到登录页
               this.login = localStorage.getItem('login') || false;
+          },
+          logout(){
+              this.login = false;
+              this.$router.push('/home'); //跳转到首页
+              localStorage.clear('login'); //清除本地存储
           }
         },
         mounted(){
