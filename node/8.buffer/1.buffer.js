@@ -46,7 +46,36 @@ console.log(buffer); //会改变源buffer 因为截取出来的字节就是原bu
 
 //1.buffer.write
 var buffer = new Buffer(12);
-//string 写入的字符串, offset,偏移量 length,写入的长度 encoding utf8
-buffer.write('训',3);
+//string 写入的字符串, offset,偏移量
+buffer.write('训',9);
 buffer.write('珠峰培',0);
 console.log(buffer.toString());
+
+//2.buffer.copy
+var buffer = new Buffer(12);
+var buf1 = new Buffer('珠峰');
+var buf2 = new Buffer('培训你好');
+buf1.copy(buffer, 0); //包前不包后 slice(0,1)
+buf2.copy(buffer, 6);
+//targetBuffer 目标buffer, targetStart,目标的开始 sourceStart  源的开始, sourceEnd 源的结束
+console.log(buffer.toString());
+
+//3.concat拼接buffer
+var buf1 = new Buffer('珠峰');
+var buf2 = new Buffer('培训');
+var buf3 = new Buffer('你好');
+//Buffer.concat([buf1,buf2,buf3]); //拼接完成后会返回一个大buffer
+
+
+//1.写长度过长，截取有效长度
+//2.过短 多的就被截取掉
+//3.不传递长度，默认全部拼接 myConcat
+Buffer.myConcat = function (list,totalLength) {
+    //1.判断是否传递长度
+    //2.如果没传递，手动算出总长度，构建一个大buffer
+    //3.如果传递 直接构建大buffer
+    //4.循环传递过来的list。将每一个buffer拷贝到大buffer上 buffer.copy()
+    //5.返回buffer，如过给的length过长截取有效内容  buffer.slice()
+    
+};
+console.log(Buffer.myConcat([buf1,buf2,buf3]).toString());
