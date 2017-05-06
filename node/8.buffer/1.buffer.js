@@ -70,12 +70,26 @@ var buf3 = new Buffer('你好');
 //1.写长度过长，截取有效长度
 //2.过短 多的就被截取掉
 //3.不传递长度，默认全部拼接 myConcat
-Buffer.myConcat = function (list,totalLength) {
+/*Buffer.myConcat = function (list,totalLength) {
     //1.判断是否传递长度
-    //2.如果没传递，手动算出总长度，构建一个大buffer
+    //2.如果没传递，手动算出总长度，构,建一个大buffer
     //3.如果传递 直接构建大buffer
     //4.循环传递过来的list。将每一个buffer拷贝到大buffer上 buffer.copy()
     //5.返回buffer，如过给的length过长截取有效内容  buffer.slice()
-    
+
+};*/
+Buffer.myConcat = function (list, totalLength) {
+    if(typeof totalLength == 'undefined'){
+        totalLength=0;
+        //算出总长度
+        list.forEach(item=>totalLength+=item.length);
+    }
+    let buffer = new Buffer(totalLength);
+    let index = 0;
+    list.forEach(item=>{
+        item.copy(buffer,index); //累加偏移量进行拷贝
+        index+=item.length;
+    });
+    return buffer.slice(0,index);
 };
 console.log(Buffer.myConcat([buf1,buf2,buf3]).toString());
