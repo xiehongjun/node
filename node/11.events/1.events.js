@@ -13,13 +13,16 @@ EventEmitter.prototype.on = function (eventName,callback) {
     }
 };
 EventEmitter.prototype.emit = function (eventName,...data) { //...data将剩余的参数转换成数组
-     this._events[eventName].forEach(item=>item.apply(this,data)); //apply可以将数组每一个拆出来依次传递给函数
+    this._events[eventName].forEach(item=>item.apply(this,data)); //apply可以将数组每一个拆出来依次传递给函数
     //{"有钱了":[learnBad]}  data=['男人','女人']
-    //this._events[eventName].forEach(item=>item(...data));
+    //this._events[eventName].forEach(item=>{item(...data)});
 };
 EventEmitter.prototype.removeListener = function (eventName,callback) {
     //返回false则删除那一项
-    this._events[eventName] = this._events[eventName].filter(item=>item!=callback);
+    this._events[eventName] = this._events[eventName].filter(item=>{
+        return item!=callback&&item.listen!=callback;
+        //如果当前的这一项和我们传进来的这一项相等要移出掉，如果不相等还要比对下当前函数listen属性和callback是否相等如果相等也要移除掉，有一者不满足 都不行所以是并且关系
+    });
 };
 EventEmitter.prototype.once = function (eventName,callback) {
     //执行一次后，在数组中删除掉此函数，下次执行不会再触发
@@ -27,14 +30,16 @@ EventEmitter.prototype.once = function (eventName,callback) {
         callback.apply(this,arguments); //emit时会触发one 函数，one会触发callback
         this.removeListener(eventName,one); //删除绑定的函数
     }
+    one.listen = callback;// 在one函数上增加一个属性
     this.on(eventName,one); //触发后删除callback
+    //{'有钱了':[one.learnBad,learnBad]}
 };
 let e = new EventEmitter();
 function learnBad(data,data1) {
     console.log(data+','+data1+'学坏');
 }
 e.once('有钱了',learnBad);
-//e.removeListener('有钱了',learnBad);
+e.removeListener('有钱了',learnBad);
 e.emit('有钱了','男人','女人');
 e.emit('有钱了','男人','女人');
 e.emit('有钱了','男人','女人');
