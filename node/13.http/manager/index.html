@@ -37,6 +37,36 @@
 <style>
     ul li{overflow: hidden}
 </style>
+
+
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">请修改~~~</h4>
+            </div>
+            <div class="modal-body">
+                书名 <input type="text" id="newName"> 书价 <input type="text" id="newPrice">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 <script>
     let oUl = document.querySelector('.list-group');
     let oBtn = document.querySelector('.add');
@@ -86,6 +116,8 @@
                               <button class="btn btn-default pull-right btn-xs"
                                       onclick="remove(${item.id})"
                                >&times;</button>
+                               ${item}
+                               <button type="button" class="btn btn-warning btn-xs pull-right" data-toggle="modal" data-target=".modal" onclick="change(${item.id},'${item.bookName}','${item.price}')">修改</button>
                         </li>`
         });
         oUl.innerHTML = str;
@@ -107,6 +139,16 @@
             }
         })
     }
+    //修改
+    let newName = document.getElementById('newName');
+    let newPrice = document.getElementById('newPrice');
+    let newId = ''; //用来修改的id 改成
+    function change(id,name,price) {
+        newId = id;
+        newName.value = name;
+        newPrice.value = price;
+    }
+    //点击保存 拿到最新的值 和 通过id 改成最新的内容
 
 </script>
 </body>
