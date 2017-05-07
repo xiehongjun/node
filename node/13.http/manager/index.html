@@ -51,7 +51,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-primary" onclick="save()">保存</button>
             </div>
         </div>
     </div>
@@ -116,7 +116,6 @@
                               <button class="btn btn-default pull-right btn-xs"
                                       onclick="remove(${item.id})"
                                >&times;</button>
-                               ${item}
                                <button type="button" class="btn btn-warning btn-xs pull-right" data-toggle="modal" data-target=".modal" onclick="change(${item.id},'${item.bookName}','${item.price}')">修改</button>
                         </li>`
         });
@@ -149,7 +148,22 @@
         newPrice.value = price;
     }
     //点击保存 拿到最新的值 和 通过id 改成最新的内容
-
+    function save() {
+        ajax({
+            //修改的id要拼接到路径后面
+            url:'/book?id='+newId,
+            type:'PUT',
+            data:JSON.stringify({
+                id:newId,
+                bookName:newName.value,
+                price:newPrice.value,
+            }),
+            success(data){
+                show(data);
+                $('.modal').modal('toggle');
+            }
+        })
+    }
 </script>
 </body>
 </html>

@@ -38,6 +38,21 @@ let server = http.createServer(function (req,res) {
                 res.end(JSON.stringify(books));
                 break;
             case 'PUT': //修改数据
+                {
+                    let id = query.id;
+                    let str = '';
+                    req.on('data',function (data) {
+                        str+=data;
+                    });
+                    req.on('end',function () {
+                        let book = JSON.parse(str);
+                        books = books.map(item=>{
+                            if(item.id == id){ return book;}
+                            return item;
+                        });
+                        res.end(JSON.stringify(books));
+                    });
+                }
                 break;
         }
     }
