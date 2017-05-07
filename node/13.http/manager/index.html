@@ -9,38 +9,64 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal">
+            <form class="form-horizontal" name="myform">
                 <div class="form-group">
                     <label for="bookName" class="control-label col-md-3">书名</label>
                     <div class="col-md-6">
-                        <input type="text" id="bookName" class="form-control" placeholder="请输入书名">
+                        <input type="text" id="bookName" class="form-control" placeholder="请输入书名" name="bookName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="bookPrice" class="control-label col-md-3">书价</label>
                     <div class="col-md-6">
-                        <input type="text" id="bookPrice" class="form-control" placeholder="请输入书的价格">
+                        <input type="text" id="bookPrice" class="form-control" placeholder="请输入书的价格" name="price">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-6">
-                        <button class="btn btn-primary" type="button">添加</button>
+                        <button class="btn btn-primary add" type="button">添加</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <ul class="list-group">
-        <li class="list-group-item">
-            书名：xxx  书的价格xxx
-            <button class="pull-right btn btn-default">&times;</button>
-        </li>
+
     </ul>
 </div>
 <style>
     ul li{overflow: hidden}
 </style>
 <script>
+    let oUl = document.querySelector('.list-group');
+    let oBtn = document.querySelector('.add');
+    let myForm = document.getElementsByName('myform')[0];
+    //序列化表单 serialize
+    function serialize(myform) {
+        let eles = myform.elements;
+        let result = {};
+        for(let i = 0;i<eles.length;i++){
+            let curEle = eles[i];
+            if(curEle.type === 'text'||curEle.type === 'password'){ //如果是输入框，我们要将他的name属性和value属性组成一个对象
+                result[curEle.name] = curEle.value;
+            }
+        }
+        return result;// 返回序列化后的对象
+    }
+    oBtn.addEventListener('click',function () {
+         let result = serialize(myForm);
+         ajax({
+             url:'/book',
+             type:'POST',
+             data:JSON.stringify(result),
+             success(data){
+                 show(data);
+             }
+         });
+    });
+
+
+
     //1.ajax请求拿回数据
     function ajax({url='',type='GET',dataType='json',success=null,data=null,async=true}) {
         let xhr  = new XMLHttpRequest();
@@ -51,21 +77,36 @@
         };
         xhr.send(data);
     }
-    let oUl = document.querySelector('.list-group');
+    //将数据转换成html
+    function show(data) {
+        let str = '';
+        data.forEach(item=>{
+            str += `<li class="list-group-item">
+                              书名:${item.bookName} 书价:${item.price}
+                              <button class="btn btn-default pull-right btn-xs"
+                                      onclick="remove(${item.id})"
+                               >&times;</button>
+                        </li>`
+        });
+        oUl.innerHTML = str;
+    }
+    //获取所有数据
     ajax({
         url:'/book',
         success(data) { //[{id:1,bookName:'vue',price:30}]
-            let str = '';
-            data.forEach(item=>{
-                str += `<li class="list-group-item">
-                              书名:${item.bookName} 书价:${item.price}
-                              <button class="btn btn-default pull-right btn-xs">&times;</button>
-                        </li>`
-            });
-            oUl.innerHTML = str;
+            show(data);
         }
-    })
-
+    });
+    //删除数据
+    function remove(id) {
+        ajax({
+            url:'/book?id='+id,
+            type:'DELETE',
+            success(data){
+                show(data);
+            }
+        })
+    }
 
 </script>
 </body>

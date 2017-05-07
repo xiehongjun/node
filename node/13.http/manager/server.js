@@ -21,8 +21,21 @@ let server = http.createServer(function (req,res) {
                 }
                 break;
             case 'POST': //增加数据
+                let str = '';
+                req.on('data',function (data) {
+                    str+=data;
+                });
+                req.on('end',function () {
+                    let book = JSON.parse(str);
+                    book.id =books.length? books[books.length-1].id+1:1;
+                    books.push(book);
+                    res.end(JSON.stringify(books));
+                });
                 break;
             case 'DELETE': //删除数据
+                let id = query.id;
+                books = books.filter(item=>item.id!=id);//url获取的id是字符串类型
+                res.end(JSON.stringify(books));
                 break;
             case 'PUT': //修改数据
                 break;
