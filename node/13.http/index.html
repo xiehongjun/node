@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+<div id="clock"></div>
+<script>
+    function ajax({url='',data=null,async=true,success=null,type='GET'}) {
+       let xhr = new XMLHttpRequest();
+       xhr.open(type,url,async);
+       xhr.responseType = 'json';
+       xhr.onload  = function () {
+           success(xhr.response)
+       };
+       xhr.send(data);
+    }
+    ajax({
+       url:'/clock',
+       success:function (data) {
+           clock.innerHTML = data.timer;
+       }
+    })
+
+</script>
+</body>
+</html>
